@@ -64,5 +64,6 @@ Post.init(
         modelName: 'post'
     }
 );
+// test
 
 module.exports = Post;
