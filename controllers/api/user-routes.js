@@ -68,7 +68,7 @@ router.post('/', (req, res) => {
             // this will give our server easy access to user_id, username, and a boolean
             // describing whether or not the user is logged in. 
             // .save() will initialize the session, then run the callback
-            res.session.save(() => {
+            req.session.save(() => {
                 req.session.user_id = dbUserData.id,
                 req.session.username = dbUserData.username;
                 req.session.loggedIn = true;
@@ -105,7 +105,7 @@ router.post('/login', (req, res) => {
 
             req.session.save(() => {
                 // declare session variables 
-                req.session.user_id = dbUserData.user_id,
+                req.session.user_id = dbUserData.id,
                 req.session.username = dbUserData.username;
                 req.session.loggedIn = true;
 
