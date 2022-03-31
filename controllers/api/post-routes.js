@@ -94,14 +94,20 @@ router.post('/', (req, res) => {
 // PUT /api/posts/upvote  
 // needs to be before put/:id, so express doesnt think this is a valid id req
 router.put('/upvote', (req, res) => {
-    // custom static method created in models/Post.js
-    Post.upvote(req.body, { Vote })
-        .then(updatedPostData => res.json(updatedPostData))
-        .catch(err => {
-            console.log(err);
-            res.status(400).json(err);
-        });
-});
+    // make sure the session exists first 
+    console.log(req.session)
+    if (req.session) {
+        // pass session id along with all destructured properties on req.body
+        // upvote() custom static method created in models/Post.js
+        Post.upvote({...req.body, user_id: req.session.user_id }, { Vote, Comment, User })
+            .then(updatedVoteData => res.json(updatedVoteData))
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+            });
+    }
+});+
+
 
 
 // update a post title 
